@@ -34,7 +34,7 @@ window.loadCss = function( hrefs, debug ){
                 });
             for( i in localStorage ) {
               if ( keys.indexOf( i ) === -1 ) {
-                debug && console.log( "loadCss: invalidates obsolete `" + i + "`" );
+                utils.log( "loadCss: invalidates obsolete `" + i + "`" );
                 localStorage.removeItem( i );
               }
             }
@@ -71,7 +71,7 @@ window.loadCss = function( hrefs, debug ){
               localStorage.removeItem( "test" );
               return true;
             } catch ( e ) {
-              debug && console.log( "loadCss: localStorage is not writtable" );
+              utils.log( "loadCss: localStorage is not writtable" );
               return false;
             }
           }
@@ -103,6 +103,14 @@ window.loadCss = function( hrefs, debug ){
          isIphone: function(){
            var re = /iPhone|iPad|iPod/i;
            return re.test( window.navigator.userAgent );
+         },
+         /**
+          * Outputs to console log if debug mode
+          * @param {String} msg
+          * @returns {void}
+          */
+         log: function( msg ) {
+           debug && console.log( msg );
          }
       },
       /**
@@ -143,12 +151,12 @@ window.loadCss = function( hrefs, debug ){
             xhr.open( "GET", cssHref, true );
             utils.on( xhr, "load", function() {
               if ( xhr.readyState === 4 ) {
-                debug && console.log( "loadCss: `" + cssHref + "` loaded async" );
+                utils.log( "loadCss: `" + cssHref + "` loaded async" );
                 // once we have the content, quickly inject the css rules
                 that._injectRawStyle( xhr.responseText );
                 // iOS Safari private browsing
                 if ( !utils.isIphone() && cache.isLocalStoageWrittable() ) {
-                  debug && console.log( "loadCss: localStorage available, caching `" + cssHref + "`" );
+                  utils.log( "loadCss: localStorage available, caching `" + cssHref + "`" );
                   cache.set( xhr.responseText );
                 }
               }
@@ -163,15 +171,15 @@ window.loadCss = function( hrefs, debug ){
          loadCss: function( cssHref ){
            var fetch;
            if ( !cache.isAvailable() || !window.XMLHttpRequest ) {
-             debug && console.log( "loadCss: loading `" + cssHref + "` old-way" );
+             utils.log( "loadCss: loading `" + cssHref + "` old-way" );
              return this._loadCssForLegacyBrowser( cssHref );
            }
            fetch = cache.get();
            if ( fetch ) {
-            debug && console.log( "loadCss: `" + cssHref + "` injected from the cache" );
+            utils.log( "loadCss: `" + cssHref + "` injected from the cache" );
             this._injectRawStyle( fetch );
            }
-           debug && console.log( "loadCss: loading `" + cssHref + "` asynchronously" );
+           utils.log( "loadCss: loading `" + cssHref + "` asynchronously" );
            this._loadCssForLegacyAsync( cssHref );
          }
        };
