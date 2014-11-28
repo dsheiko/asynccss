@@ -1,8 +1,5 @@
 {
   "globals": {
-    "define": true,
-    "require": true,
-    "exports": true,
     "window": true,
 		"describe": false,
 		"it": false,
@@ -10,9 +7,8 @@
 		"beforeEach": false,
 		"afterEach": false,
 		"module": false,
-		"__dirname": false,
 		"console": true,
-		"process": true
+		"document": true
   },
   "boss": true,
   "curly": true,

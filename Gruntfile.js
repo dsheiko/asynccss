@@ -12,14 +12,27 @@ module.exports = function(grunt) {
 					all: [ "src/**/*.js" ]
 			},
 			jscs: {
-					options: {
-							"standard": "Jquery"
-					},
-					all: ["src"]
-			}
+        app: {
+          options: {
+            standard: "Jquery"
+          },
+          files: {
+            src: [ "./src" ]
+          }
+        },
+        test: {
+          options: {
+            standard: "Jquery",
+            reportFull: true
+          },
+          files: {
+            src: [ "./src" ]
+          }
+        }
+      },
 	});
 
-  grunt.registerTask( "test", [ "jshint", "jscs" ] );
+  grunt.registerTask( "test", [ "jshint", "jscs:test" ] );
   grunt.registerTask( "default", [ "test" ] );
 
 };
