@@ -33,7 +33,7 @@ window.loadCss = function( hrefs, debug ){
                   return getKey( href );
                 });
             for( i in localStorage ) {
-              if ( keys.indexOf( i ) === -1 ) {
+              if ( keys.indexOf( i ) === -1 && i.match( /^css_cache_/g ) ) {
                 utils.log( "loadCss: invalidates obsolete `" + i + "`" );
                 localStorage.removeItem( i );
               }
