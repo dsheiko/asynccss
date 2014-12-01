@@ -10,6 +10,16 @@ This work heavily influenced by
 
 Licensed MIT
 
+## Install
+With npm do:
+```
+npm install asynccss --save
+```
+With bower do:
+```
+bower install asynccss --save
+```
+
 ## Usage
 
 ``` html
