@@ -4,7 +4,7 @@
  * @param {Boolean} debug [OPTIONAL] - enables debug messaging into console.log
  * @returns {void}
  */
-window.loadCss = function( hrefs, debug ){
+window.asyncCss = function( hrefs, debug ){
   /**
    * It's supposed to be wrapped in a closure on a higher level
    */
@@ -34,7 +34,7 @@ window.loadCss = function( hrefs, debug ){
                 });
             for( i in localStorage ) {
               if ( keys.indexOf( i ) === -1 && i.match( /^css_cache_/g ) ) {
-                utils.log( "loadCss: invalidates obsolete `" + i + "`" );
+                utils.log( "asyncCss: invalidates obsolete `" + i + "`" );
                 localStorage.removeItem( i );
               }
             }
@@ -71,7 +71,7 @@ window.loadCss = function( hrefs, debug ){
               localStorage.removeItem( "test" );
               return true;
             } catch ( e ) {
-              utils.log( "loadCss: localStorage is not writtable" );
+              utils.log( "asyncCss: localStorage is not writtable" );
               return false;
             }
           }
@@ -134,7 +134,7 @@ window.loadCss = function( hrefs, debug ){
           * @param {String} cssHref
           * @returns {void}
           */
-         _loadCssForLegacyBrowser: function( cssHref ) {
+         _asyncCssForLegacyBrowser: function( cssHref ) {
             var node = document.createElement( "link" );
             node.href = cssHref;
             node.rel = "stylesheet";
@@ -146,17 +146,17 @@ window.loadCss = function( hrefs, debug ){
           * @param {String} cssHref
           * @returns {void}
           */
-         _loadCssForLegacyAsync: function( cssHref ){
+         _asyncCssForLegacyAsync: function( cssHref ){
             var that = this, xhr = new window.XMLHttpRequest();
             xhr.open( "GET", cssHref, true );
             utils.on( xhr, "load", function() {
               if ( xhr.readyState === 4 ) {
-                utils.log( "loadCss: `" + cssHref + "` loaded async" );
+                utils.log( "asyncCss: `" + cssHref + "` loaded async" );
                 // once we have the content, quickly inject the css rules
                 that._injectRawStyle( xhr.responseText );
                 // iOS Safari private browsing
                 if ( !utils.isIphone() && cache.isLocalStoageWrittable() ) {
-                  utils.log( "loadCss: localStorage available, caching `" + cssHref + "`" );
+                  utils.log( "asyncCss: localStorage available, caching `" + cssHref + "`" );
                   cache.set( xhr.responseText );
                 }
               }
@@ -168,19 +168,19 @@ window.loadCss = function( hrefs, debug ){
           * @param {String} cssHref
           * @returns {void}
           */
-         loadCss: function( cssHref ){
+         asyncCss: function( cssHref ){
            var fetch;
            if ( !cache.isAvailable() || !window.XMLHttpRequest ) {
-             utils.log( "loadCss: loading `" + cssHref + "` old-way" );
-             return this._loadCssForLegacyBrowser( cssHref );
+             utils.log( "asyncCss: loading `" + cssHref + "` old-way" );
+             return this._asyncCssForLegacyBrowser( cssHref );
            }
            fetch = cache.get();
            if ( fetch ) {
-            utils.log( "loadCss: `" + cssHref + "` injected from the cache" );
+            utils.log( "asyncCss: `" + cssHref + "` injected from the cache" );
             this._injectRawStyle( fetch );
            }
-           utils.log( "loadCss: loading `" + cssHref + "` asynchronously" );
-           this._loadCssForLegacyAsync( cssHref );
+           utils.log( "asyncCss: loading `" + cssHref + "` asynchronously" );
+           this._asyncCssForLegacyAsync( cssHref );
          }
        };
       };
@@ -190,7 +190,7 @@ window.loadCss = function( hrefs, debug ){
     var i = 0, l = hrefs.length;
     // Not like .forEach just in case of legacy browser
     for( ; i < l; i++ ) {
-      ( new Loader( new Cache( hrefs[ i ] ) ) ).loadCss( hrefs[ i ] );
+      ( new Loader( new Cache( hrefs[ i ] ) ) ).asyncCss( hrefs[ i ] );
     }
   }());
   Array.prototype.map && Array.prototype.indexOf && ( new Cache() ).cleanup( hrefs );

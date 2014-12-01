@@ -1,4 +1,4 @@
-# loadCSS
+# AsyncCSS
 
 A function for asynchronous loading of non-critical CSS and deferring Web Fonts,
 which leverages localStorage for caching.
@@ -17,11 +17,11 @@ Licensed MIT
 ...
 <script type="text/javascript">
   (function(){
-    <?php include ".../loadCss.min.js"; ?>
+    <?php include ".../asyncCss.min.js"; ?>
     try {
-      loadCss( [ "css/foo.css", "css/bar.css" ], true );
+      asyncCss( [ "css/foo.css", "css/bar.css" ], true );
     } catch( e ) {
-      console.log( "loadCss: exception " + e );
+      console.log( "asyncCss: exception " + e );
     }
   }());
 </script>

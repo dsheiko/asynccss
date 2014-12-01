@@ -1,9 +1,9 @@
 {
-  "name": "loadcss",
+  "name": "asynccss",
   "description": "Utility that compiles CommonJS (NodeJS) modules into a single JavaScript file suitable for the browser",
   "version": "0.0.1",
   "author": "Dmitry Sheiko <me@dsheiko.com>",
-	"main": "src/loadcss.js",
+	"main": "src/asynccss.js",
 	"dependencies": {
 	},
 	"devDependencies": {
@@ -27,6 +27,6 @@
   "repository":
   {
 		"type": "git",
-    "url": "https://github.com/dsheiko/loadcss"
+    "url": "https://github.com/dsheiko/asynccss"
   }
 }
