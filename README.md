@@ -22,6 +22,12 @@ bower install asynccss --save
 
 ## Usage
 
+```
+asyncCss( [ path, .. ], debug? );
+```
+
+## Example
+
 ``` html
 <head>
 ...

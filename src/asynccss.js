@@ -177,7 +177,7 @@ window.asyncCss = function( hrefs, debug ){
            fetch = cache.get();
            if ( fetch ) {
             utils.log( "asyncCss: `" + cssHref + "` injected from the cache" );
-            this._injectRawStyle( fetch );
+            return this._injectRawStyle( fetch );
            }
            utils.log( "asyncCss: loading `" + cssHref + "` asynchronously" );
            this._asyncCssForLegacyAsync( cssHref );
