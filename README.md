@@ -26,9 +26,9 @@ bower install asynccss --save
 asyncCss( [ path, .. ], options? );
 
 options:
- {Boolean} [debug="false"] - is verbose mode?
+ {Boolean} [debug="false"] - is verbose mode? (tells what it does in the console log)
  {String} [ns="css_cache_"] - namespace per asyncCss call. If you reuse asyncCss later in your JavaScript,
-   supply a different ns. That will prevent the garbage collector from cleaning up items cached in a previoud call.
+   supply a different `ns`. That will prevent the garbage collector from cleaning up items cached in a previous call.
 ```
 
 ## Example
@@ -56,6 +56,6 @@ options:
 
 ## Changelog
 
-0.0.3 - A separate cache namespace can be supplied now per asyncCss call
-0.0.2 - Hotfix: missing early exit was causing async loading even after CSS is present in the cache
-0.0.1 - First commit
+* 0.0.3 - A separate cache namespace can be supplied now per asyncCss call
+* 0.0.2 - Hotfix: missing early exit was causing async loading even after CSS is present in the cache
+* 0.0.1 - First commit
