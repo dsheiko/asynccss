@@ -23,7 +23,12 @@ bower install asynccss --save
 ## Usage
 
 ```
-asyncCss( [ path, .. ], debug? );
+asyncCss( [ path, .. ], options? );
+
+options:
+ {Boolean} [debug="false"] - is verbose mode?
+ {String} [ns="css_cache_"] - namespace per asyncCss call. If you reuse asyncCss later in your JavaScript,
+   supply a different ns. That will prevent the garbage collector from cleaning up items cached in a previoud call.
 ```
 
 ## Example
@@ -35,7 +40,7 @@ asyncCss( [ path, .. ], debug? );
   (function(){
     <?php include ".../asyncCss.min.js"; ?>
     try {
-      asyncCss( [ "css/foo.css", "css/bar.css" ], true );
+      asyncCss( [ "css/foo.css", "css/bar.css" ], { debug: true } );
     } catch( e ) {
       console.log( "asyncCss: exception " + e );
     }
@@ -48,3 +53,9 @@ asyncCss( [ path, .. ], debug? );
 ...
 </head>
 ```
+
+## Changelog
+
+0.0.3 - A separate cache namespace can be supplied now per asyncCss call
+0.0.2 - Hotfix: missing early exit was causing async loading even after CSS is present in the cache
+0.0.1 - First commit

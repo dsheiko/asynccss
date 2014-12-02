@@ -1,13 +1,15 @@
 /**
  * A function for loading non-critical CSS asynchronously that leverages localStorage for caching.
  * @param {Array} hrefs -  array of CSS file URLs
- * @param {Boolean} debug [OPTIONAL] - enables debug messaging into console.log
+ * @param {Options} [options] - enables debug messaging into console.log
  * @returns {void}
+ *
+ * @typedef {Object} Options - loader options
+ * @property {Boolean} [debug="false"] - is verbose mode?
+ * @property {String} [ns="css_cache_"] - namespace per asyncCss call. If you reuse asyncCss later in your JavaScript,
+ *  supply a different ns. That will prevent the garbage collector from cleaning up items cached in a previoud call.
  */
-window.asyncCss = function( hrefs, debug ){
-  /**
-   * It's supposed to be wrapped in a closure on a higher level
-   */
+window.asyncCss = function( hrefs, options ){
   "use strict";
      /**
       * Provides Cache API for a given CSS filename
@@ -18,7 +20,7 @@ window.asyncCss = function( hrefs, debug ){
             // Normalize filename to use it as a storage key
             getKey = function( filename ) {
               var re = /[\:\.\#\?=\\\/-]/g;
-              return "css_cache_" + filename.replace( re, "_" );
+              return options.ns + filename.replace( re, "_" );
             },
             key = filename ? getKey( filename ) : null;
         return {
@@ -110,7 +112,7 @@ window.asyncCss = function( hrefs, debug ){
           * @returns {void}
           */
          log: function( msg ) {
-           debug && console.log( msg );
+           options.debug && console.log( "asyncCss: " + msg );
          }
       },
       /**
@@ -134,7 +136,7 @@ window.asyncCss = function( hrefs, debug ){
           * @param {String} cssHref
           * @returns {void}
           */
-         _asyncCssForLegacyBrowser: function( cssHref ) {
+         _loadCssForLegacyBrowser: function( cssHref ) {
             var node = document.createElement( "link" );
             node.href = cssHref;
             node.rel = "stylesheet";
@@ -146,17 +148,17 @@ window.asyncCss = function( hrefs, debug ){
           * @param {String} cssHref
           * @returns {void}
           */
-         _asyncCssForLegacyAsync: function( cssHref ){
+         _loadCssForLegacyAsync: function( cssHref ){
             var that = this, xhr = new window.XMLHttpRequest();
             xhr.open( "GET", cssHref, true );
             utils.on( xhr, "load", function() {
               if ( xhr.readyState === 4 ) {
-                utils.log( "asyncCss: `" + cssHref + "` loaded async" );
+                utils.log( "`" + cssHref + "` loaded async" );
                 // once we have the content, quickly inject the css rules
                 that._injectRawStyle( xhr.responseText );
                 // iOS Safari private browsing
                 if ( !utils.isIphone() && cache.isLocalStoageWrittable() ) {
-                  utils.log( "asyncCss: localStorage available, caching `" + cssHref + "`" );
+                  utils.log( "localStorage available, caching `" + cssHref + "`" );
                   cache.set( xhr.responseText );
                 }
               }
@@ -168,29 +170,33 @@ window.asyncCss = function( hrefs, debug ){
           * @param {String} cssHref
           * @returns {void}
           */
-         asyncCss: function( cssHref ){
+         loadCss: function( cssHref ){
            var fetch;
            if ( !cache.isAvailable() || !window.XMLHttpRequest ) {
-             utils.log( "asyncCss: loading `" + cssHref + "` old-way" );
-             return this._asyncCssForLegacyBrowser( cssHref );
+             utils.log( "loading `" + cssHref + "` old-way" );
+             return this._loadCssForLegacyBrowser( cssHref );
            }
            fetch = cache.get();
            if ( fetch ) {
-            utils.log( "asyncCss: `" + cssHref + "` injected from the cache" );
+            utils.log( "`" + cssHref + "` injected from the cache" );
             return this._injectRawStyle( fetch );
            }
-           utils.log( "asyncCss: loading `" + cssHref + "` asynchronously" );
-           this._asyncCssForLegacyAsync( cssHref );
+           utils.log( "loading `" + cssHref + "` asynchronously" );
+           this._loadCssForLegacyAsync( cssHref );
          }
        };
       };
 
-  debug = debug || false;
+  // Defaults
+  options = options || {};
+  options.debug = options.debug || false;
+  options.ns = options.ns || "css_cache_";
+
   (function(){
     var i = 0, l = hrefs.length;
     // Not like .forEach just in case of legacy browser
     for( ; i < l; i++ ) {
-      ( new Loader( new Cache( hrefs[ i ] ) ) ).asyncCss( hrefs[ i ] );
+      ( new Loader( new Cache( hrefs[ i ] ) ) ).loadCss( hrefs[ i ] );
     }
   }());
   Array.prototype.map && Array.prototype.indexOf && ( new Cache() ).cleanup( hrefs );
