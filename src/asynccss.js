@@ -36,7 +36,7 @@ window.asyncCss = function( hrefs, options ){
                 });
             for( i in localStorage ) {
               if ( keys.indexOf( i ) === -1 && i.match( /^css_cache_/g ) ) {
-                utils.log( "asyncCss: invalidates obsolete `" + i + "`" );
+                utils.log( "invalidates obsolete `" + i + "`" );
                 localStorage.removeItem( i );
               }
             }
@@ -73,7 +73,7 @@ window.asyncCss = function( hrefs, options ){
               localStorage.removeItem( "test" );
               return true;
             } catch ( e ) {
-              utils.log( "asyncCss: localStorage is not writtable" );
+              utils.log( "localStorage is not writtable" );
               return false;
             }
           }
@@ -153,7 +153,7 @@ window.asyncCss = function( hrefs, options ){
             xhr.open( "GET", cssHref, true );
             utils.on( xhr, "load", function() {
               if ( xhr.readyState === 4 ) {
-                utils.log( "`" + cssHref + "` loaded async" );
+                utils.log( "`" + cssHref + "` is loaded" );
                 // once we have the content, quickly inject the css rules
                 that._injectRawStyle( xhr.responseText );
                 // iOS Safari private browsing
@@ -173,7 +173,7 @@ window.asyncCss = function( hrefs, options ){
          loadCss: function( cssHref ){
            var fetch;
            if ( !cache.isAvailable() || !window.XMLHttpRequest ) {
-             utils.log( "loading `" + cssHref + "` old-way" );
+             utils.log( "fallback loading `" + cssHref + "`" );
              return this._loadCssForLegacyBrowser( cssHref );
            }
            fetch = cache.get();
@@ -181,7 +181,7 @@ window.asyncCss = function( hrefs, options ){
             utils.log( "`" + cssHref + "` injected from the cache" );
             return this._injectRawStyle( fetch );
            }
-           utils.log( "loading `" + cssHref + "` asynchronously" );
+           utils.log( "start loading `" + cssHref + "` (asynchronously)" );
            this._loadCssForLegacyAsync( cssHref );
          }
        };
