@@ -1,4 +1,6 @@
 # AsyncCSS
+[![Build Status](https://travis-ci.org/dsheiko/loadcss.png)](https://travis-ci.org/dsheiko/loadcss)
+[![NPM version](https://badge.fury.io/js/asynccss.png)](http://badge.fury.io/js/asynccss)
 
 A function for asynchronous loading of non-critical CSS and deferring Web Fonts,
 which leverages localStorage for caching.
