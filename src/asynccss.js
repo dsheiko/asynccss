@@ -121,7 +121,7 @@ window.asyncCss = function( hrefs, options ){
           * @returns {void}
           */
          log: function( msg, code ) {
-           this.logMsgs.push({ msg:msg, code: code });
+           this.logMsgs.push({ msg: msg, code: code });
            options.debug && console.log( "asyncCss: " + msg );
          }
       },
