@@ -29,6 +29,7 @@ options:
  {Boolean} [debug="false"] - is verbose mode? (tells what it does in the console log)
  {String} [ns="css_cache_"] - namespace per asyncCss call. If you reuse asyncCss later in your JavaScript,
    supply a different `ns`. That will prevent the garbage collector from cleaning up items cached in a previous call.
+ {Function} [done=function(){}] - callback function
 ```
 
 ## Example
@@ -54,8 +55,14 @@ options:
 </head>
 ```
 
+## Run automated-tests
+```
+$mocha-phantomjs test/index.html
+```
+
 ## Changelog
 
+* 0.0.4 - Automated tests supplied
 * 0.0.3 - A separate cache namespace can be supplied now per asyncCss call
 * 0.0.2 - Hotfix: missing early exit was causing async loading even after CSS is present in the cache
 * 0.0.1 - First commit

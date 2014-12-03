@@ -2,6 +2,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks( "grunt-contrib-jshint" );
 	grunt.loadNpmTasks( "grunt-contrib-jscs" );
+  grunt.loadNpmTasks( "grunt-mocha-phantomjs" );
+
 
 
 	grunt.initConfig({
@@ -30,9 +32,12 @@ module.exports = function(grunt) {
           }
         }
       },
+      mocha_phantomjs: {
+        all: [ 'test/**/*.html' ]
+      }
 	});
 
-  grunt.registerTask( "test", [ "jshint", "jscs:test" ] );
+  grunt.registerTask( "test", [ "jshint", "jscs:test", "mocha_phantomjs" ] );
   grunt.registerTask( "default", [ "test" ] );
 
 };
