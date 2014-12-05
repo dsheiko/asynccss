@@ -59,7 +59,7 @@ options:
 
 ## Run automated-tests
 ```
-$mocha-phantomjs test/index.html
+$grunt mocha_phantomjs
 ```
 
 ## Changelog
