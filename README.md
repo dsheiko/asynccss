@@ -6,8 +6,8 @@ A function for asynchronous loading of non-critical CSS and deferring Web Fonts,
 which leverages localStorage for caching.
 
 This work heavily influenced by
-* [Breaking news at 1000ms, Patrick Hamann, The Guardian |https://speakerdeck.com/patrickhamann/breaking-news-at-1000ms-front-trends-2014]
-* [BBC News team optimization experiments|https://github.com/BBC-News]
+* [Breaking news at 1000ms, Patrick Hamann, The Guardian](https://speakerdeck.com/patrickhamann/breaking-news-at-1000ms-front-trends-2014)
+* [BBC News team optimization experiments](https://github.com/BBC-News)
 * [Improving Smashing Magazine’s Performance: A Case Study](http://www.smashingmagazine.com/2014/09/08/improving-smashing-magazine-performance-case-study/)
 
 Licensed MIT
@@ -24,7 +24,7 @@ bower install asynccss --save
 
 ## Usage
 
-```
+```js
 asyncCss( [ path, .. ], options? );
 
 options:
