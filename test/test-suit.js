@@ -8,7 +8,7 @@ var
 
     FIXTURE_NS = "test_",
     FIXTURE_CSS_PATH1 = "fixture.css",
-    FIXTURE_CSS_PATH2 = "fixture2.css",
+    FIXTURE_CSS_PATH2 = "fixture.css?v2",
     FIXTURE_CSS = ".injected-style {  display: none; }",
     localStorage = window.localStorage,
     sandbox = document.getElementById( "sandbox" ),
