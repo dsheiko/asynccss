@@ -3,7 +3,8 @@
 [![NPM version](https://badge.fury.io/js/asynccss.png)](http://badge.fury.io/js/asynccss)
 
 A function for asynchronous loading of non-critical CSS and deferring Web Fonts,
-which leverages localStorage for caching.
+which leverages localStorage for caching. When a new version of file supplied (app.css?v2) any old versions (app.css?xx)
+are being removed from localStorage automatically
 
 This work heavily influenced by
 * [Breaking news at 1000ms, Patrick Hamann, The Guardian](https://speakerdeck.com/patrickhamann/breaking-news-at-1000ms-front-trends-2014)
@@ -65,6 +66,7 @@ $grunt mocha_phantomjs
 
 ## Changelog
 
+* 0.0.5 - Garbage collector now removes only old version of a provided css file.
 * 0.0.4 - Automated tests supplied
 * 0.0.3 - A separate cache namespace can be supplied now per asyncCss call
 * 0.0.2 - Hotfix: missing early exit was causing async loading even after CSS is present in the cache

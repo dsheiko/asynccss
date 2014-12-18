@@ -1,5 +1,6 @@
 /**
  * A function for loading non-critical CSS asynchronously that leverages localStorage for caching.
+ * jscs standard:Jquery
  * @param {Array} hrefs -  array of CSS file URLs
  * @param {Options} [options] - enables debug messaging into console.log
  * @returns {Array} log messags
@@ -19,26 +20,23 @@ window.asyncCss = function( hrefs, options ){
         var localStorage = options.localStorage,
             // Normalize filename to use it as a storage key
             getKey = function( filename ) {
-              var re = /[\:\.\#\?=\\\/-]/g;
+              var re = /[\:\.\#=\\\/-]/g;
               return options.ns + filename.replace( re, "_" );
             },
             key = filename ? getKey( filename ) : null;
         return {
           /**
            * Invalidation all the obsolete hrefs
-           * @param {Array} hrefs
            * @returns {void}
            */
-          cleanup: function( hrefs ) {
-            var i,
-                keys = hrefs.map(function( href ){
-                  return getKey( href );
-                });
+          cleanupOldVersions: function() {
+            var k,
+                parts = key.split( "?" );
 
-            for( i in localStorage ) {
-              if ( keys.indexOf( i ) === -1 && i.indexOf( options.ns ) === 0 ) {
-                utils.log( "invalidates obsolete `" + i + "`", 8 );
-                localStorage.removeItem( i );
+            for( k in localStorage ) {
+              if ( k !== key && k.indexOf( parts[ 0 ] ) === 0 ) {
+                utils.log( "invalidates obsolete `" + k + "`", 8 );
+                localStorage.removeItem( k );
               }
             }
           },
@@ -48,6 +46,7 @@ window.asyncCss = function( hrefs, options ){
            * @returns {void}
            */
           set: function( content ) {
+            this.cleanupOldVersions();
             localStorage.setItem( key, content );
           },
           /**
@@ -198,7 +197,7 @@ window.asyncCss = function( hrefs, options ){
            this._loadCssForLegacyAsync( cssHref );
          }
        };
-      };
+      }, i = 0, l = hrefs.length;
 
   // Defaults
   options = options || {};
@@ -212,12 +211,22 @@ window.asyncCss = function( hrefs, options ){
     options.XMLHttpRequest : window.XMLHttpRequest;
   options.done = options.done || function(){};
 
-  (function(){
-    var i = 0, l = hrefs.length;
-    // Not like .forEach just in case of legacy browser
-    for( ; i < l; i++ ) {
-      ( new Loader( new Cache( hrefs[ i ] ) ) ).loadCss( hrefs[ i ] );
+  /**
+   * Helper, clean up localStorage completelly
+   */
+  window.asyncCss.cleanup = function() {
+    var k;
+    if ( !options.localStorage ) {
+      return;
     }
-  }());
-  Array.prototype.map && Array.prototype.indexOf && ( new Cache() ).cleanup( hrefs );
+    for( k in options.localStorage ) {
+      options.localStorage.removeItem( k );
+    }
+  };
+
+  // Not like .forEach just in case of legacy browser
+  for( ; i < l; i++ ) {
+    ( new Loader( new Cache( hrefs[ i ] ) ) ).loadCss( hrefs[ i ] );
+  }
+
 };
