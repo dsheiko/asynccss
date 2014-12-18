@@ -66,7 +66,7 @@ $grunt mocha_phantomjs
 
 ## Changelog
 
-* 0.0.5 - Garbage collector now removes only old version of a provided css file.
+* 0.0.5 - Garbage collector now removes only old version of a concrete supplied css file.
 * 0.0.4 - Automated tests supplied
 * 0.0.3 - A separate cache namespace can be supplied now per asyncCss call
 * 0.0.2 - Hotfix: missing early exit was causing async loading even after CSS is present in the cache
