@@ -71,3 +71,6 @@ $grunt mocha_phantomjs
 * 0.0.3 - A separate cache namespace can be supplied now per asyncCss call
 * 0.0.2 - Hotfix: missing early exit was causing async loading even after CSS is present in the cache
 * 0.0.1 - First commit
+
+
+[![Analytics](https://ga-beacon.appspot.com/UA-1150677-13/dsheiko/asynccss)](http://githalytics.com/dsheiko/asynccss)
