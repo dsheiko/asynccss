@@ -1,6 +1,9 @@
 # AsyncCSS
+
+[![NPM](https://nodei.co/npm/asynccss.png)](https://nodei.co/npm/asynccss/)
+
 [![Build Status](https://travis-ci.org/dsheiko/asynccss.png)](https://travis-ci.org/dsheiko/asynccss)
-[![NPM version](https://badge.fury.io/js/asynccss.png)](http://badge.fury.io/js/asynccss)
+[![Bower version](https://badge.fury.io/bo/asynccss.svg)](http://badge.fury.io/bo/asynccss)
 
 A function for asynchronous loading of non-critical CSS and deferring Web Fonts,
 which leverages localStorage for caching. When a new version of file supplied (app.css?v2) any old versions (app.css?xx)

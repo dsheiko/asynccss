@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
   grunt.loadNpmTasks( "grunt-contrib-jshint" );
-	grunt.loadNpmTasks( "grunt-jscs" );
+	grunt.loadNpmTasks( "grunt-jscodesniffer" );
   grunt.loadNpmTasks( "grunt-mocha-phantomjs" );
   grunt.loadNpmTasks( "grunt-contrib-uglify" );
 
