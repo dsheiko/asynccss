@@ -77,3 +77,6 @@ $grunt mocha_phantomjs
 
 
 [![Analytics](https://ga-beacon.appspot.com/UA-1150677-13/dsheiko/asynccss)](http://githalytics.com/dsheiko/asynccss)
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dsheiko/asynccss/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
