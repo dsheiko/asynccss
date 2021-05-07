@@ -1,5 +1,9 @@
 # AsyncCSS
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+> WARNING - THIS PROJECT IS NO LONGER MAINTAINED!!!
+
 [![NPM](https://nodei.co/npm/asynccss.png)](https://nodei.co/npm/asynccss/)
 
 [![Build Status](https://travis-ci.org/dsheiko/asynccss.png)](https://travis-ci.org/dsheiko/asynccss)
